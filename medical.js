@@ -1638,7 +1638,6 @@ var caminho2 = "M122.405937,242.241241 "
                 }
     
                 //CIRCLE ANTES GERAL
-                console.log('aaa')
                 if(colorAntes != null){
                     svg.append('circle')
                     .attr('id', 'circleAntes')
@@ -1895,6 +1894,8 @@ var caminho2 = "M122.405937,242.241241 "
                     ratingsVideo.push(element.ratingVideo);
                     ratingsGaleria.push(element.ratingGaleria);
                     ratingsProject.push(element.ratingProject);
+                    
+
 
 
                     //NON NULL RATINGS
@@ -1945,6 +1946,7 @@ var caminho2 = "M122.405937,242.241241 "
                     
  
                 }
+
                 
 
                 //CALCULAR MEDIA EXTERIOR
@@ -1962,10 +1964,14 @@ var caminho2 = "M122.405937,242.241241 "
                 //CALCULAR MEDIA GALERIA
                 mediaG = d3.sum(ratingsGaleria);
                 var mediaGaleria = mediaG / ratingsGaleriaCount;
+          
 
                 //CALCULAR MEDIA PROJECT
                 mediaP = d3.sum(ratingsProject);
                 var mediaProject = mediaP / ratingsProjectCount;
+
+                console.log(ratingsProject)
+                console.log(mediaP)
 
                 var corExterior = 'white'
                 var corOval = 'white'
@@ -2024,6 +2030,7 @@ var caminho2 = "M122.405937,242.241241 "
                 } else if (mediaGaleria >= 4.5){
                     corGaleria = '#3FD25F';
                 }
+               
 
                 //CORES PROJECT
                 if(mediaProject > 0 && mediaProject < 1.5){
@@ -2037,6 +2044,7 @@ var caminho2 = "M122.405937,242.241241 "
                 } else if (mediaProject >= 4.5){
                     corProject = '#3FD25F';
                 }
+
 
 
                 var ratingUserExterior = 0
@@ -2412,7 +2420,8 @@ var caminho2 = "M122.405937,242.241241 "
                     
                     //CASO CONTRÁRIO, O ELEMENTO MAIS ALTO COM A MAXIMA COR
                     else{
-                        //MENOR COUNT
+
+                                            //MENOR COUNT
                         if(countsFuture[0]['id'] == 'e') corFutureExterior = "#FFE2BBFF"
                         if(countsFuture[0]['id'] == 'o') corFutureOval = "#FFE2BBFF"
                         if(countsFuture[0]['id'] == 'v') corFutureVideo = "#FFE2BBFF"
@@ -2425,23 +2434,23 @@ var caminho2 = "M122.405937,242.241241 "
                         if(countsFuture[4]['id'] == 'g') corFutureGaleria = "#BF4E00FF"
                         if(countsFuture[4]['id'] == 'p') corFutureProject = "#BF4E00FF"
                         //MEDIO
-                        if(counts[1]['id'] == 'e') corFutureExterior = "#FFE2BBFF"
-                        if(counts[1]['id'] == 'o') corFutureOval = "#FFE2BBFF"
-                        if(counts[1]['id'] == 'v') corFutureVideo = "#FFE2BBFF"
-                        if(counts[1]['id'] == 'g') corFutureGaleria = "#FFE2BBFF"
-                        if(counts[1]['id'] == 'p') corFutureProject = "#FFE2BBFF"
+                        if(countsFuture[1]['id'] == 'e') corFutureExterior = "#FFE2BBFF"
+                        if(countsFuture[1]['id'] == 'o') corFutureOval = "#FFE2BBFF"
+                        if(countsFuture[1]['id'] == 'v') corFutureVideo = "#FFE2BBFF"
+                        if(countsFuture[1]['id'] == 'g') corFutureGaleria = "#FFE2BBFF"
+                        if(countsFuture[1]['id'] == 'p') corFutureProject = "#FFE2BBFF"
 
-                        if(counts[2]['id'] == 'e') corFutureExterior = "#FFE2BBFF"
-                        if(counts[2]['id'] == 'o') corFutureOval = "#FFE2BBFF"
-                        if(counts[2]['id'] == 'v') corFutureVideo = "#FFE2BBFF"
-                        if(counts[2]['id'] == 'g') corFutureGaleria = "#FFE2BBFF"
-                        if(counts[2]['id'] == 'p') corFutureProject = "#FFE2BBFF"
+                        if(countsFuture[2]['id'] == 'e') corFutureExterior = "#FFE2BBFF"
+                        if(countsFuture[2]['id'] == 'o') corFutureOval = "#FFE2BBFF"
+                        if(countsFuture[2]['id'] == 'v') corFutureVideo = "#FFE2BBFF"
+                        if(countsFuture[2]['id'] == 'g') corFutureGaleria = "#FFE2BBFF"
+                        if(countsFuture[2]['id'] == 'p') corFutureProject = "#FFE2BBFF"
 
-                        if(counts[3]['id'] == 'e') corFutureExterior = "#FFE2BBFF"
-                        if(counts[3]['id'] == 'o') corFutureOval = "#FFE2BBFF"
-                        if(counts[3]['id'] == 'v') corFutureVideo = "#FFE2BBFF"
-                        if(counts[3]['id'] == 'g') corFutureGaleria = "#FFE2BBFF"
-                        if(counts[3]['id'] == 'p') corFutureProject = "#FFE2BBFF"
+                        if(countsFuture[3]['id'] == 'e') corFutureExterior = "#FFE2BBFF"
+                        if(countsFuture[3]['id'] == 'o') corFutureOval = "#FFE2BBFF"
+                        if(countsFuture[3]['id'] == 'v') corFutureVideo = "#FFE2BBFF"
+                        if(countsFuture[3]['id'] == 'g') corFutureGaleria = "#FFE2BBFF"
+                        if(countsFuture[3]['id'] == 'p') corFutureProject = "#FFE2BBFF"
                     }
 
                     //VAMOS VER OS ELEMENTOS DO MEIO
@@ -2589,7 +2598,7 @@ var caminho2 = "M122.405937,242.241241 "
                                 }    
                             }
                         }
-                    }                          
+                    } 
                 }
 
 
@@ -2734,6 +2743,8 @@ var caminho2 = "M122.405937,242.241241 "
                     .attr("fill", "white")
                     .raise()
 
+                    
+
                 innerSVG.append("path")
                     .attr("id", 'mapaGaleriaPrincipal')
                     .attr('d',mapaGaleriaPrincipal)
@@ -2829,6 +2840,8 @@ var caminho2 = "M122.405937,242.241241 "
                         .duration('50')
                         .attr('opacity', '1');
                     })
+
+                    
 
                 innerSVG.append("path")
                 .attr("id", 'mapaProjectRoom')
@@ -3910,7 +3923,6 @@ var caminho2 = "M122.405937,242.241241 "
                                 .duration('50')
                                 .attr('opacity', '1');
                             })
-
                         innerSVG.append("path")
                             .attr("id", 'mapaVideoRoom')
                             .attr('d',mapaVideoRoom)

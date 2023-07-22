@@ -632,15 +632,35 @@ var caminho2 = "M122.405937,242.241241 "
                 ratingsApos.push(element.apos);
                 ids.push(element.id);
                 idsNotOrganized.push(element.id);
-                times.push(element.time)
+
+                var novoTempo
+                var mes = element.time[5] + element.time[6] 
+                var mesPrint
+                if(mes == '01') mesPrint = 'janeiro'
+                if(mes == '02') mesPrint = 'fevereiro'
+                if(mes == '03') mesPrint = 'março'
+                if(mes == '04') mesPrint = 'abril'
+                if(mes == '05') mesPrint = 'maio'
+                if(mes == '06') mesPrint = 'junho'
+                if(mes == '07') mesPrint = 'julho'
+                if(mes == '08') mesPrint = 'agosto'
+                if(mes == '09') mesPrint = 'setembro'
+                if(mes == '10') mesPrint = 'outubro'
+                if(mes == '11') mesPrint = 'novembro'
+                if(mes == '12') mesPrint = 'dezembro'
+                novoTempo = element.time[8] + element.time[9] + ' de ' + mesPrint
+                times.push(novoTempo)
+
             }
 
             var usedIds = []
 
             var indexes = []
-            
 
-        
+            var tri = d3.symbol().type(d3.symbolTriangle).size(400);
+
+                
+ 
                 //function to remove repeated users and get the most recent responses
             for(let index = 0; index < ids.length; index++){
                 id = ids[index];
@@ -773,16 +793,17 @@ var caminho2 = "M122.405937,242.241241 "
                 .style("font-family", "Roboto")
                 .style("fill", "#0d4148")
 
-                svg.append('rect')
-                .attr("id", 'userc' + id)
-                .attr('x', 60)
-                .attr('y', y)
-                .attr('width', 20)
-                .attr('height', 20)
-                .style("fill", "#6E9EA4")
-                .style('stroke', "black")
+                svg.append('circle')
+                    .attr("id", 'userc' + id)
+                    .attr('cx', 70)
+                    .attr('cy', y + 10)
+                    .attr('r', 10)
+                    .style("fill", "#6E9EA4")
+                    .style('stroke', "black")
 
                 .on('click', function(e, d){
+
+                
 
                     //get ratings of the selected person
 
@@ -799,7 +820,18 @@ var caminho2 = "M122.405937,242.241241 "
                         ratingAntes = ratingsAntes[indexToGet]
                         ratingApos = ratingsApos[indexToGet]
 
-                        //drawLineChart()
+                        //the others get lighter and deselect them
+                        for(let index1 = 0; index1 < indexes.length; index1++){
+                            if(ids[indexes[index1]] != ids[indexes[index]]){
+                                var teste = 'userc' + ids[indexes[index1]]
+                                var testee = d3.select("#" + teste)
+                        
+                                testee.classed("selected", false)
+                                    .style('fill', "#6E9EA4")
+                            }
+                            
+                            
+                        }
 
 
                         //APAGAR OS QUE ESTAVAM LA
@@ -811,6 +843,10 @@ var caminho2 = "M122.405937,242.241241 "
                         d3.select("#rect2").remove()
                         d3.select("#rect3").remove()
                         d3.select("#rect4").remove()
+
+                        
+                        
+
 
 
 
@@ -825,13 +861,13 @@ var caminho2 = "M122.405937,242.241241 "
                         //get all the rating given
                         var allRatingsAntesByUser = []
                         var allRatingsAposByUser = []
+                        
                         for(let index4 = 0; index4 < idsNotOrganized.length; index4++){
                             if(indexesForRatings.includes(index4)){
                                 allRatingsAntesByUser.push(ratingsAntes[index4])
                                 allRatingsAposByUser.push(ratingsApos[index4]) 
                             }
-                        }
-                        
+                        }                        
 
                         //CORES
                         //SQUARES USER INDIVIDUAL
@@ -932,6 +968,12 @@ var caminho2 = "M122.405937,242.241241 "
                         //VER QUAL O GRUPO SELECIONADO: LINE VS CIRCLE CHAT
                         //CIRCLE CHART
                         if(d3.select("#ultima").classed("selected") == false){
+                            //APAGAR O ANTERIOR
+                            for(let index1 = 0; index1 < indexes.length; index1++){
+                                svg.select("#rectuserantes" + usedIds[index1]).remove()
+                                svg.select("#rectuserdepois" + usedIds[index1]).remove()
+                                     
+                            }
                             //square before
                             svg.append('rect')
                             .attr("id","rectuserantes" + usedIds[indexToGet])
@@ -1369,7 +1411,7 @@ var caminho2 = "M122.405937,242.241241 "
                     .attr("id", 'todas')
                     .attr('x', 280)
                     .attr('y', 40)
-                    .attr('width', 190)
+                    .attr('width', 210)
                     .attr('height', 25)
                     .style("fill", "#6E9EA4")
                     .style('stroke', "black")
@@ -1421,7 +1463,7 @@ var caminho2 = "M122.405937,242.241241 "
 
 
                 todas.append('text')
-                    .text("Evolução ao longo do tempo")
+                    .text("Evolução nas últimas consultas")
                     .attr('x', 300)
                     .attr('y', 55)
                     .style("fill", "white")
@@ -1555,13 +1597,15 @@ var caminho2 = "M122.405937,242.241241 "
                     .style("font-weight", 800)
                     .style("font-family", "Roboto")
                 .style("font-size", '20px')
-                svg.append('circle')
+
+                var sym = d3.symbol().type(d3.symbolTriangle).size(200);
+                svg.append("path")
                 .attr('id', 'overall2')
-                    .attr('cx', 70)
-                    .attr('cy', 505)
-                    .attr('r', 10)
+                    .attr("d", sym)
                     .style("fill", "white")
                     .style('stroke', "black")
+                    .attr("transform", "translate(65, 506)");
+
                 svg.append('text')
                 .attr('id', 'overall3')
                     .text("Média geral de todos os utilizadores")
@@ -1579,7 +1623,7 @@ var caminho2 = "M122.405937,242.241241 "
                     .style('stroke', "black")
                 svg.append('text')
                 .attr('id', 'overall5')
-                    .text("Os seus valores")
+                    .text("Utilizador individual")
                     .attr('x', 387)
                     .attr('y', 510)
                     .style("font-family", "Roboto")
@@ -1641,23 +1685,21 @@ var caminho2 = "M122.405937,242.241241 "
     
                 //CIRCLE ANTES GERAL
                 if(colorAntes != null){
-                    svg.append('circle')
-                    .attr('id', 'circleAntes')
-                    .attr('cx', cxAntes)
-                    .attr('cy', cyAntes)
-                    .attr('r', circleRadius)
-                    .style("fill", colorAntes)
-                    .style('stroke', "black")
-    
+                    svg.append("path")
+                        .attr('id', 'circleAntes')
+                        .attr("d", tri)
+                        .style("fill", colorAntes)
+                        .style('stroke', "black")
+                        .attr("transform", "translate(" + cxAntes + ", " + cyAntes + ")");
+                    
     
                 //CIRCLE APOS GERAL
-                svg.append('circle')
-                    .attr('id', 'circleDepois')
-                    .attr('cx', cxApos)
-                    .attr('cy', cyApos)
-                    .attr('r', circleRadius)
-                    .style("fill", colorApos)
-                    .style('stroke', "black")
+                    svg.append("path")
+                        .attr('id', 'circleDepois')
+                        .attr("d", tri)
+                        .style("fill", colorApos)
+                        .style('stroke', "black")
+                        .attr("transform", "translate(" + cxApos + ", " + cyApos + ")");
                 }
                 
             }
@@ -1760,7 +1802,7 @@ var caminho2 = "M122.405937,242.241241 "
                         svg.append('text')
                             .attr('id', 'legendaLine1') 
                             .text(timesToPrint[0])
-                            .attr('x', 80)
+                            .attr('x', 100)
                             .attr('y', 440)
                             .style("font-family", "Roboto")
                             .style("font-size", '12px')
@@ -1771,7 +1813,7 @@ var caminho2 = "M122.405937,242.241241 "
                         svg.append('text')
                             .attr('id', 'legendaLine2') 
                             .text(timesToPrint[1])
-                            .attr('x', 160)
+                            .attr('x', 180)
                             .attr('y', 460)
                             .style("font-family", "Roboto")
                             .style("font-size", '12px')
@@ -1782,7 +1824,7 @@ var caminho2 = "M122.405937,242.241241 "
                         svg.append('text')
                             .attr('id', 'legendaLine3')
                             .text(timesToPrint[2])
-                            .attr('x', 240)
+                            .attr('x', 260)
                             .attr('y', 440)
                             .style("font-family", "Roboto")
                             .style("font-size", '12px')
@@ -1793,7 +1835,7 @@ var caminho2 = "M122.405937,242.241241 "
                         svg.append('text')
                             .attr('id', 'legendaLine4') 
                             .text(timesToPrint[3])
-                            .attr('x', 320)
+                            .attr('x', 340)
                             .attr('y', 460)
                             .style("font-family", "Roboto")
                             .style("font-size", '12px')
@@ -4444,22 +4486,15 @@ var caminho2 = "M122.405937,242.241241 "
                     .style("font-family", "Roboto")
                     .style("font-size", '20px')
 
-                var y = 570
+                var y = 580
                 var yt = 585
 
-                
-               
-
-                
 
                 for(let index = 0; index < indexes.length; index++){
 
                     var indexForInfo = indexes[index]
                     
                     id = ids[indexForInfo];
-                    
-
-
                     
  
                     //Seleção do user
@@ -4470,20 +4505,17 @@ var caminho2 = "M122.405937,242.241241 "
                     .style("font-family", "Roboto")
                     .style("fill", "#0d4148")
 
-                    svg.append('rect')
-                    .attr("id", 'user' + id)
-                    .attr('x', 710)
-                    .attr('y', y)
-                    .attr('width', 20)
-                    .attr('height', 20)
-                    .style("fill", "#6E9EA4")
-                    .style('stroke', "black")
-                    .classed("selected", false)
-                    .on('click', function(e, d){
+                    svg.append('circle')
+                        .attr("id", 'user' + id)
+                        .attr('cx', 720)
+                        .attr('cy', y)
+                        .attr('r', 10)
+                        .style("fill", "#6E9EA4")
+                        .style('stroke', "black")
+                        .classed("selected", false)
+                        .on('click', function(e, d){
 
                         idOfClickedUser = ids[indexes[index]]
-
-
 
                         if (!d3.select(this).classed("selected") ){
                             d3.select(this).classed("selected", true)
@@ -4503,8 +4535,6 @@ var caminho2 = "M122.405937,242.241241 "
                                 
                                 
                             }
-
-                            //.style('fill', "#6E9EA4")
 
                             var indexToGet
                             for(let index2 = 0; index2 < usedIds.length; index2++){

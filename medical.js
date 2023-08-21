@@ -970,9 +970,12 @@ var caminho2 = "M122.405937,242.241241 "
                         if(d3.select("#ultima").classed("selected") == false){
                             //APAGAR O ANTERIOR
                             for(let index1 = 0; index1 < indexes.length; index1++){
-                                svg.select("#rectuserantes" + usedIds[index1]).remove()
-                                svg.select("#rectuserdepois" + usedIds[index1]).remove()
-                                     
+                                var teste = 'rectuserantes' + ids[indexes[index1]]
+                                var testee = d3.select("#" + teste)
+                                testee.remove()
+                                var teste1 = 'rectuserdepois' + ids[indexes[index1]]
+                                var testee1 = d3.select("#" + teste1)
+                                testee1.remove()
                             }
                             //square before
                             svg.append('rect')
